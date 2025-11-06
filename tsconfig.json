@@ -1,0 +1,31 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "lib": ["dom", "esnext"],
+    "jsx": "react-native",
+    "skipLibCheck": true,
+    "module": "ES6",
+    "target": "es6",
+    "noEmit": true,
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@components": ["app/components"],
+      "@navigation": ["app/navigation"],
+      "@constants": ["app/constants"],
+      "@features": ["app/features"],
+      "@services": ["app/services"],
+      "@utils": ["app/utils"],
+      "@store": ["app/store"],
+      "@hooks": ["app/hooks"],
+      "@data": ["app/data"]
+    }
+  },
+  "include": ["**/*", "**/*.ts", "**/*.tsx", "env.d.ts"],
+  "exclude": ["node_modules"]
+}
