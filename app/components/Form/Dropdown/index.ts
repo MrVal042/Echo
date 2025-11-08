@@ -1,1 +1,2 @@
-export { default as ItemPicker, PickerProps } from './Picker'
+export { default as ItemPicker } from './Picker'
+export type { PickerProps } from './Picker'

@@ -16,13 +16,14 @@ import {
   ViewStyle,
 } from 'react-native'
 
-import { height, input, useTheme } from '@constants'
+import { height, input } from '@constants'
 import { IText } from '../../Element'
 import Icon from '../../Icon'
 import LabelInput from '../LabelInput'
 import useInputStyle, { IRules } from '../useInputStyle'
 import RenderDropdown, { DropdownItem } from './RenderDropdown'
 import { calculateDropdownHeight, isExist } from './helper'
+import { useTheme } from '@hooks'
 
 export interface PickerProps<T extends FieldValues> {
   onSelect?: (value: string, index?: number) => void

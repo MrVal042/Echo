@@ -1,4 +1,4 @@
-import { useTheme } from '@constants'
+import useTheme from './useTheme'
 import { AppRoute, useRootNavigationProp } from '@navigation'
 import { useNavigation } from '@react-navigation/native'
 import { useAppStore } from '@store'

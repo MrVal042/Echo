@@ -1,5 +1,6 @@
 import { Icon, IconProps, IText, shadowStyles } from '@components'
-import { scale, useTheme } from '@constants'
+import { scale } from '@constants'
+import { useTheme } from '@hooks'
 import { useAppStore } from '@store'
 import { useEffect } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'

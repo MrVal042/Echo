@@ -1,4 +1,4 @@
-import { useTheme } from '@constants'
+import { useTheme } from '@hooks'
 import { StyleSheet, ViewProps } from 'react-native'
 import Animated from 'react-native-reanimated'
 

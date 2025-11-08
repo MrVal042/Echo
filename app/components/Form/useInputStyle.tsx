@@ -1,4 +1,5 @@
-import { input, scale, useTheme } from '@constants'
+import { input, scale } from '@constants'
+import { useTheme } from '@hooks'
 import { Path, RegisterOptions } from 'react-hook-form'
 import { StyleSheet } from 'react-native'
 

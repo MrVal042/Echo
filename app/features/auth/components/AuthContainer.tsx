@@ -1,15 +1,18 @@
-import { IContainer, RootContainer } from '@components'
+import { BgImage, IContainer, RootContainer } from '@components'
 import { useApp } from '@hooks'
 import { StatusBar } from 'expo-status-bar'
 
-export default function AuthContainer({ children, ...props }: IContainer) {
+interface IProps extends IContainer {
+  hideBg?: boolean
+}
+export default function AuthContainer({ children, hideBg, ...props }: IProps) {
   const { isDarkMode } = useApp()
   const statusBarStyle = isDarkMode ? 'light' : 'dark'
 
   return (
     <RootContainer {...props}>
       <StatusBar style={statusBarStyle} animated={true} translucent />
-      {children}
+      <BgImage hideBg={hideBg}>{children}</BgImage>
     </RootContainer>
   )
 }

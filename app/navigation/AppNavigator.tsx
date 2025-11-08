@@ -4,6 +4,7 @@ import { AppRoute } from './navigationRef'
 
 import AccountNavigator from './AccountNavigator'
 import AuthNavigator from './AuthNavigator'
+import { NotificationDetails, NotificationEntry } from '@features'
 
 const { Navigator, Screen } = createNativeStackNavigator<AppRoute>()
 
@@ -19,6 +20,8 @@ export default function RootNavigator() {
       <Screen name='Tabs' component={BottomTabs} />
       <Screen name='AuthNavigator' component={AuthNavigator} />
       <Screen name='AccountNavigator' component={AccountNavigator} />
+      <Screen name='NotificationEntry' component={NotificationEntry} />
+      <Screen name='NotificationDetails' component={NotificationDetails} />
     </Navigator>
   )
 }

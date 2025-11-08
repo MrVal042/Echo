@@ -1,4 +1,4 @@
-import { duration, scale, useTheme } from '@constants'
+import { scale } from '@constants'
 import {
   Entypo,
   Feather,
@@ -6,6 +6,7 @@ import {
   Ionicons,
   MaterialIcons,
 } from '@expo/vector-icons'
+import { duration, useTheme } from '@hooks'
 import type { ComponentProps } from 'react'
 import { useEffect } from 'react'
 import { StyleProp, TextStyle } from 'react-native'

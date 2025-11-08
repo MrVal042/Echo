@@ -3,12 +3,12 @@ import { IColors } from '@constants'
 import { users } from '@data'
 import { StackNavigationProps } from '@navigation'
 import { Linking, StyleSheet, TouchableOpacity, View } from 'react-native'
-import { useAuth } from '../auth'
+import { useAuth } from '@store'
 
 export default function Welcome({
   navigation,
 }: StackNavigationProps<AuthRoutes, 'Welcome'>) {
-  const { login } = useAuth()
+  const { loginUser } = useAuth()
 
   const handleUrl = async (url: string) => {
     const supported = await Linking.canOpenURL(url)
@@ -96,12 +96,7 @@ export default function Welcome({
             label='Home'
             bgColor={IColors.successDark}
             icon={{ name: 'home', size: 18 }}
-            onPress={() =>
-              login({
-                user: { ...users[1] },
-                token: '',
-              })
-            }
+            onPress={() => loginUser({ ...users[1] }, null)}
           />
           <Divider space='l' />
         </View>

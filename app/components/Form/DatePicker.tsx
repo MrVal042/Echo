@@ -9,10 +9,11 @@ import {
 import { TouchableOpacity, View } from 'react-native'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 
-import { input, useTheme } from '@constants'
+import { input } from '@constants'
 import { IButton, IText } from '../Element'
 import LabelInput from './LabelInput'
 import useInputStyle, { IRules } from './useInputStyle'
+import { useTheme } from '@hooks'
 
 export interface DateProps<T extends FieldValues> {
   control?: Control<T>

@@ -1,72 +1,73 @@
-import { AxiosError } from 'axios'
-import dayjs from 'dayjs'
+export const capitalize = (text: string | null) =>
+  !text || text == null
+    ? text
+    : text.charAt?.(0).toUpperCase?.() + text?.toLowerCase?.()?.slice?.(1)
 
-export enum Role {
-  Buyer = 'Buyer',
-  Seller = 'Seller',
-  Guest = 'Guest',
+export const formatNumber = (value: number, fixedTo?: number): string => {
+  const abs = Math.abs(value)
+  if (fixedTo) {
+    if (abs >= 1_000_000_000)
+      return `${(value / 1_000_000_000).toFixed(fixedTo)}B`
+    if (abs >= 1_000_000) return `${(value / 1_000_000).toFixed(fixedTo)}M`
+    if (abs >= 1_000) return `${(value / 1_000).toFixed(fixedTo)}K`
+    return value.toString()
+  }
+  if (abs >= 1_000_000_000)
+    return `${(value / 1_000_000_000).toLocaleString()}B`
+  if (abs >= 1_000_000) return `${(value / 1_000_000).toLocaleString()}M`
+  if (abs >= 1_000) return `${(value / 1_000).toLocaleString()}K`
+  return value?.toString?.()
 }
 
-export const handlerError = (error: unknown) => {
-  if (error) {
-    let message = 'An unexpected error occurred.'
-    let code = ''
-    let status = 0
-    let responseURL = ''
+export const convertToFormItems = (arr: string[]) =>
+  arr.map((lst) => ({ label: lst, value: lst }))
 
-    if ((error as AxiosError)?.isAxiosError) {
-      const axiosError = error as AxiosError<any>
-      if (axiosError.code) {
-        code = axiosError.code
-      }
-      if (axiosError.status) {
-        status = axiosError.status
-      }
-      if (axiosError.response?.data?.message) {
-        message = axiosError.response.data.message
-      } else if (axiosError.message) {
-        message = axiosError.message
-      }
-      responseURL =
-        axiosError.request?.responseURL ||
-        `${axiosError.config?.baseURL || ''}${axiosError.config?.url || ''}`
-    } else if (error instanceof Error) {
-      message = error.message
-    }
-    if (__DEV__) {
-      console.log(
-        '__DEV__ Error: 🚀🚀👨',
-        '\n{',
-        '\n   code: ',
-        code,
-        '\n   message:',
-        message,
-        '\n   error: ',
-        error,
-        '\n   url: ',
-        responseURL,
-        '\n}'
-      )
-    }
+type CurrencySymbol = 'NGN' | 'USD' | 'GBP' | 'EUR'
 
-    return { message, code, status }
-  }
+const currencySymbols: Record<CurrencySymbol, string> = {
+  NGN: '₦',
+  USD: '$',
+  GBP: '£',
+  EUR: '€',
 }
 
-export const formatDate = (date: string) => dayjs(date).format('MMM DD, YYYY')
+export function formatCurrency(
+  value: number | string | null,
+  currency?: null | CurrencySymbol | string
+): string {
+  if (!value) return 'NA'
+  const symbol = currencySymbols[(currency as CurrencySymbol) || 'GBP']
+  const _value = typeof value === 'string' ? Number(value) : value
+  const isNegative = _value < 0
+  const formatted = formatNumber(Math.abs(_value))
 
-export const getToday = (type: 'year' | 'month' | 'day' | 'date') => {
-  switch (type) {
-    case 'year':
-      return dayjs().format('YYYY')
-    case 'month':
-      return dayjs().format('MMM')
-    case 'day':
-      return dayjs().format('DDD')
+  return `${isNegative ? '-' : ''}${symbol}${formatted}`
+}
 
-    default:
-      return dayjs().format('YYYY')
-  }
+export function slugify(name: string): string {
+  return name
+    .normalize('NFKD') // Normalize accents/diacritics
+    .replace(/[’‘']/g, '') // Remove smart quotes/apostrophes
+    .replace(/[^a-zA-Z0-9]+/g, '-') // Replace non-alphanumeric with -
+    .replace(/^-+|-+$/g, '') // Trim leading/trailing dashes
+    .toLowerCase()
+}
+
+export const filterPayload = <T extends Record<string, any>>(payload: T) => {
+  return Object.fromEntries(
+    Object.entries(payload).filter(([_, value]) => {
+      if (Array.isArray(value)) return value.length > 0
+      if (typeof value === 'number') return Number.isFinite(value) && value > 0
+      if (typeof value === 'string') return value.trim().length > 0
+      return value !== null && value !== undefined
+    })
+  ) as T
+}
+
+export const getIdentifier = (uri: string) => {
+  const base = uri.split('/').pop() || ''
+  const match = base.match(/^(.*?)(?:\.[^.]+)?$/) // strip extension if exists
+  return match?.[1] || base
 }
 
 export const formatLikes = (count: number) => {
@@ -85,6 +86,3 @@ export const formatLikes = (count: number) => {
   }
   return count ? count.toString() : 0
 }
-
-export const convertToFormItems = (arr: string[]) =>
-  arr.map((lst) => ({ label: lst, value: lst }))

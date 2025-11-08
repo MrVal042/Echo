@@ -1,4 +1,4 @@
-import { IColors, useTheme } from '@constants'
+import { IColors } from '@constants'
 import {
   StyleSheet,
   TextInput,
@@ -7,6 +7,7 @@ import {
 } from 'react-native'
 import { IView } from '../Element'
 import Icon from '../Icon'
+import { useTheme } from '@hooks'
 
 interface SearchFieldProps extends TextInputProps {
   onPressClear?: () => void

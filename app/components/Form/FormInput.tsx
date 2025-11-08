@@ -1,4 +1,4 @@
-import { height, input, useTheme } from '@constants'
+import { height, input } from '@constants'
 import React, { Ref } from 'react'
 import {
   DimensionValue,
@@ -11,6 +11,7 @@ import {
 import { IText } from '../Element'
 import LabelInput from './LabelInput'
 import useInputStyle from './useInputStyle'
+import { useTheme } from '@hooks'
 
 interface InputProps extends Omit<TextInputProps, 'style'> {
   style?: StyleProp<ViewStyle>

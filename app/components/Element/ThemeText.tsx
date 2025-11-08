@@ -1,12 +1,13 @@
 // ThemeText.tsx
-import { useTheme, width } from '@constants'
+import { width } from '@constants'
+import { useTheme } from '@hooks'
 import {
   PixelRatio,
   TextProps as RNTextProps,
   StyleProp,
   TextStyle,
 } from 'react-native'
-import Animated from 'react-native-reanimated'
+import Animated, { SharedValue } from 'react-native-reanimated'
 
 const guidelineBaseWidth = 375
 const scaleFont = (size: number) => {
@@ -20,7 +21,7 @@ type TextTransform = 'none' | 'capitalize' | 'uppercase' | 'lowercase'
 
 interface Props extends RNTextProps {
   size?: number
-  color?: string | Animated.SharedValue<string>
+  color?: string | SharedValue<string>
   textAlign?: TextAlign
   textTransform?: TextTransform
   variant?: TextVariant

@@ -10,12 +10,12 @@ import {
   Welcome,
 } from '@features'
 
-import { useApp } from '@hooks'
+import { useAuth } from '@store'
 
 const { Navigator, Screen } = createNativeStackNavigator<AuthRoutes>()
 
 export default function RootNavigator() {
-  const { isNewUser, isRegistered } = useApp()
+  const { isNewUser, isRegistered } = useAuth()
 
   return (
     <Navigator

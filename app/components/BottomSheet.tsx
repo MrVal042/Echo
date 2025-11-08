@@ -1,4 +1,4 @@
-import { useTheme } from '@constants'
+import { useTheme } from '@hooks'
 import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetHandleProps,

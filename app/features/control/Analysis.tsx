@@ -1,5 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { Text, View } from 'react-native'
 
 export default function Analysis() {
   return (
@@ -8,5 +7,3 @@ export default function Analysis() {
     </View>
   )
 }
-
-const styles = StyleSheet.create({})

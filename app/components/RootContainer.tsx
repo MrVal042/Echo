@@ -1,11 +1,12 @@
 import React from 'react'
 import { ScrollView, StyleSheet } from 'react-native'
 
-import { height, useTheme } from '@constants'
+import { height } from '@constants'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import Divider from './Divider'
 import { IView } from './Element'
 import Header from './Header'
+import { useTheme } from '@hooks'
 
 export interface IContainer extends IHeader {
   children: React.ReactNode

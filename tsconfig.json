@@ -1,16 +1,22 @@
 {
-  "extends": "expo/tsconfig.base",
   "compilerOptions": {
+    "typeRoots": ["./app/@types", "./node_modules/@types"],
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "moduleResolution": "bundler",
+    "types": ["jest", "node"],
     "resolveJsonModule": true,
     "lib": ["dom", "esnext"],
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "noUnusedLocals": true,
+    "noImplicitAny": true,
     "jsx": "react-native",
     "skipLibCheck": true,
-    "module": "ES6",
-    "target": "es6",
+    "target": "esnext",
+    "module": "esnext",
+    "allowJs": true,
     "noEmit": true,
     "strict": true,
     "baseUrl": ".",
@@ -19,13 +25,16 @@
       "@navigation": ["app/navigation"],
       "@constants": ["app/constants"],
       "@features": ["app/features"],
-      "@services": ["app/services"],
+      "@styles": ["app/@styles"],
       "@utils": ["app/utils"],
       "@store": ["app/store"],
       "@hooks": ["app/hooks"],
-      "@data": ["app/data"]
+      "@data": ["app/data"],
+      "@assets": ["assets"],
+      "@api": ["app/api"],
+      "@env": ["env.d.ts"]
     }
   },
-  "include": ["**/*", "**/*.ts", "**/*.tsx", "env.d.ts"],
-  "exclude": ["node_modules"]
+  "include": ["app", "App.tsx", "__test__"],
+  "extends": "expo/tsconfig.base"
 }

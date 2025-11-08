@@ -12,11 +12,15 @@ import {
 import { IColors } from '@constants'
 import Icon, { IconProps } from '../Icon'
 
+interface IConProps extends IconProps {
+  alignIcon?: 'left' | 'right'
+}
+
 interface BtnProps extends TouchableOpacityProps {
   bgColor?: string
   color?: string
-  icon?: IconProps
   label: string
+  icon?: IConProps
   variant?: 'primary' | 'secondary' | 'outline'
   textStyle?: StyleProp<TextStyle>
   width?: DimensionValue
@@ -70,7 +74,14 @@ export default function Button({
       disabled={disabled}
       activeOpacity={0.8}
     >
-      <View style={styles.content}>
+      <View
+        style={[
+          styles.content,
+          {
+            flexDirection: icon?.alignIcon === 'right' ? 'row-reverse' : 'row',
+          },
+        ]}
+      >
         {icon && <Icon {...icon} color={color || IColors.white} />}
         <Text style={txtStyle}>{label}</Text>
       </View>
@@ -86,7 +97,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   content: {
-    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     gap: 15,

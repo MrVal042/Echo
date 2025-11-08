@@ -7,7 +7,7 @@ import {
   ViewStyle,
 } from 'react-native'
 
-import { useTheme } from '@constants'
+import { useTheme } from '@hooks'
 import { IText, IView } from './Element'
 import Icon from './Icon'
 
@@ -59,7 +59,11 @@ export default function Header({
         <IView style={{ width: 30 }} />
       )}
 
-      <IText variant='title' style={[styles.title, { color: colors.text }]}>
+      <IText
+        size={20}
+        variant='title'
+        style={[styles.title, { color: colors.text }]}
+      >
         {title}
       </IText>
       {rightAdornment || <IView style={{ width: 30 }} />}
