@@ -1,8 +1,14 @@
-import { Divider, IButton, IText, RootContainer } from '@components'
+import { IButton, IText, RootContainer } from '@components'
 import { IColors } from '@constants'
-import { users } from '@data'
+import { bgImage, users } from '@data'
 import { StackNavigationProps } from '@navigation'
-import { Linking, StyleSheet, TouchableOpacity, View } from 'react-native'
+import {
+  Linking,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  Image,
+} from 'react-native'
 import { useAuth } from '@store'
 
 export default function Welcome({
@@ -10,95 +16,125 @@ export default function Welcome({
 }: StackNavigationProps<AuthRoutes, 'Welcome'>) {
   const { loginUser } = useAuth()
 
-  const handleUrl = async (url: string) => {
-    const supported = await Linking.canOpenURL(url)
-
-    if (supported) {
-      await Linking.openURL(url)
-    } else {
-      console.log("Don't know how to open URI: " + url)
+  const RenderLink = (item: { name: string; link: string; size?: number }) => {
+    const handleUrl = async (url: string) => {
+      const supported = await Linking.canOpenURL(url)
+      if (supported) await Linking.openURL(url)
+      else console.log("Can't open URL: " + url)
     }
+    return (
+      <TouchableOpacity onPress={() => handleUrl(item.link)}>
+        <IText
+          color={IColors.infoDark}
+          textTransform='capitalize'
+          size={item.size || 14}
+          style={{
+            marginBottom: -5,
+            textDecorationLine: 'underline',
+          }}
+        >
+          {item.name}
+        </IText>
+      </TouchableOpacity>
+    )
   }
-
   return (
-    <RootContainer title='Welcome screen'>
+    <RootContainer title='Welcome screen' scroll>
       <View style={styles.container}>
-        <IText variant='title' size={18} textAlign='center'>
-          Welcome to React Native Boilerplate by MrVal042
+        <Image source={bgImage} style={styles.logo} resizeMode='contain' />
+
+        <IText variant='title' size={20} textAlign='center'>
+          This is React Native Boilerplate
         </IText>
-        <IText>
-          This is a{' '}
-          <IText variant='bold' size={14}>
-            production-ready boilerplate
-          </IText>{' '}
-          for building scalable React Native apps using:
+
+        <IText textAlign='justify'>
+          Kickstart your next <IText variant='bold'>production-grade app</IText>{' '}
+          with a <IText variant='bold'>ready-to-scale foundation</IText> built
+          on Expo, TypeScript, and modern architecture. Designed for developers
+          who value clarity, structure, and speed.
         </IText>
-        <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
+
+        <IText variant='title' size={18}>
+          ⚙️ Built with:
+        </IText>
+
+        <View style={styles.links}>
           {links.map((item, index) => (
-            <TouchableOpacity
-              key={String(index)}
-              onPress={() => handleUrl(item.link)}
-            >
-              <IText
-                textTransform='capitalize'
-                color={IColors.infoDark}
-                style={{
-                  color: IColors.infoDark,
-                  textDecorationLine: 'underline',
-                }}
-              >
-                {item.label}
-              </IText>
-            </TouchableOpacity>
+            <RenderLink key={String(index)} {...item} />
           ))}
         </View>
+
         <IText>
           <IText variant='bold' size={20}>
             🚀 Features:
           </IText>
           {'\n'}- Modular architecture
-          {'\n'}- Secure & async store
+          {'\n'}- Secure async storage
           {'\n'}- Global error handler
+          {'\n'}- Axios API integration
           {'\n'}- TypeScript strict mode
-          {'\n'}- Organized folder structure
-          {'\n'}- Environment variable support
-          {'\n'}- Custom hooks for logic isolation
-          {'\n'}- Zustand for global state management
-          {'\n'}- Axios configured for faster integration
-          {'\n'}- unit, component and end2end Testing setup
-          {'\n'}- App Analysis and Sentry to track standalone app
+          {'\n'}- React Hook Form + Yup
+          {'\n'}- Expo Push Notifications
+          {'\n'}- Navigation (Stack & Tabs)
+          {'\n'}- Testing setup (unit & e2e)
+          {'\n'}- Light & Dark theme support
+          {'\n'}- Environment variables (.env)
+          {'\n'}- Reusable custom components
+          {'\n'}- Zustand global state management
+          {'\n'}- Integrated App Monitoring (Sentry)
         </IText>
-        <TouchableOpacity
-          onPress={() => {
-            console.log('Open in VSCode: app/features/control/Welcome.tsx')
-            handleUrl(
-              'vscode://file/full/path/to/app/features/control/Welcome.tsx'
-            )
-          }}
-        >
-          <IText>
-            Go to{' '}
-            <IText
-              color={IColors.infoDark}
-              style={{
-                color: IColors.infoDark,
-                textDecorationLine: 'underline',
-              }}
-            >
-              app/features/control/Welcome.tsx
-            </IText>{' '}
-            to edit this screen
-          </IText>
-        </TouchableOpacity>
+        <IText>
+          ⭐ Star the project on{' '}
+          <RenderLink
+            link={'https://github.com/MrVal042/app-template'}
+            name='Github'
+          />
+        </IText>
+        <IText>
+          Tap <IText variant='bold'>Explore Demo</IText> to log in as a sample
+          user.
+        </IText>
+        <IText>
+          ✏️ Edit this screen at{' '}
+          <RenderLink
+            size={12}
+            link='vscode://file/full/path/to/app/features/control/Welcome.tsx'
+            name='app/features/control/Welcome.tsx'
+          />
+        </IText>
+
         <View style={{ marginTop: 'auto', gap: 20 }}>
-          <IButton label='Login' onPress={() => navigation.navigate('Login')} />
           <IButton
-            label='Home'
+            marginBottom={0}
+            label='Get Started'
+            onPress={() => navigation.navigate('Signup')}
+          />
+
+          <IButton
+            label='Explore Demo'
+            marginBottom={-10}
             bgColor={IColors.successDark}
             icon={{ name: 'home', size: 18 }}
             onPress={() => loginUser({ ...users[1] }, null)}
           />
-          <Divider space='l' />
+
+          <IText textAlign='center' size={13}>
+            Made by{' '}
+            <IText size={13} variant='bold'>
+              MrVal042
+            </IText>{' '}
+            — follow on{' '}
+            <RenderLink
+              size={12}
+              name='x(Twitter)'
+              link='https://x.com/vasogwaze'
+            />{' '}
+            |{' '}
+            <RenderLink
+              name='LinkedIn'
+              link='https://www.linkedin.com/in/valentine-asogwa-030272212/'
+            />
+          </IText>
         </View>
       </View>
     </RootContainer>
@@ -107,49 +143,58 @@ export default function Welcome({
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 10,
+    width: '100%',
     flex: 1,
     gap: 20,
-    width: '100%',
+  },
+  logo: {
+    height: 120,
+    width: '30%',
+    borderWidth: 1,
+    borderRadius: 25,
+    alignSelf: 'center',
+    borderColor: IColors.activeColorDark,
+  },
+  links: {
+    gap: 7,
+    marginTop: -10,
+    flexWrap: 'wrap',
+    flexDirection: 'row',
   },
 })
 
 const links = [
-  { label: 'expo', link: 'https://expo.dev/' },
-  { label: 'animation', link: 'https://expo.dev/' },
-  { label: 'React hook form', link: 'https://expo.dev/' },
-  { label: 'Yup validator', link: 'https://expo.dev/' },
+  { name: 'Expo', link: 'https://expo.dev/' },
+  { name: 'React Navigation', link: 'https://reactnavigation.org/' },
   {
-    label: 'dayjs',
-    link: 'https://expo.dev/',
+    name: 'Reanimated',
+    link: 'https://docs.expo.dev/versions/latest/sdk/reanimated/',
   },
+  { name: 'React Hook Form', link: 'https://react-hook-form.com/' },
+  { name: 'Yup Validator', link: 'https://github.com/jquense/yup' },
+  { name: 'Vector Icons', link: 'https://icons.expo.fyi/' },
   {
-    label: 'vector-icons',
-    link: 'https://icons.expo.fyi/Index',
-  },
-  {
-    label: 'bottom-sheet',
+    name: 'Bottom Sheet',
     link: 'https://www.npmjs.com/package/@gorhom/bottom-sheet',
   },
-  { label: 'axios', link: 'https://axios-http.com/docs/intro' },
   {
-    label: 'datetime-picker',
-    link: 'https://www.npmjs.com/package/react-native-modal-datetime-picker',
-  },
-  {
-    label: 'otp-entry',
-    link: 'https://www.npmjs.com/package/react-native-otp-entry',
-  },
-  {
-    label: 'secure-store',
+    name: 'Secure Store',
     link: 'https://docs.expo.dev/versions/latest/sdk/securestore/',
   },
   {
-    label: 'async-storage',
-    link: 'https://react-native-async-storage.github.io/async-storage/docs/install/',
+    name: 'OTP Entry',
+    link: 'https://www.npmjs.com/package/react-native-otp-entry',
   },
-  { label: 'Zustand', link: 'https://github.com/pmndrs/zustand' },
   {
-    label: 'React Navigation',
-    link: 'https://reactnavigation.org/',
+    name: 'Datetime Picker',
+    link: 'https://www.npmjs.com/package/react-native-modal-datetime-picker',
+  },
+  { name: 'Zustand', link: 'https://github.com/pmndrs/zustand' },
+  { name: 'Dayjs', link: 'https://day.js.org/' },
+  { name: 'Axios', link: 'https://axios-http.com/docs/intro' },
+  {
+    name: 'Async Storage',
+    link: 'https://react-native-async-storage.github.io/async-storage/docs/install/',
   },
 ]
