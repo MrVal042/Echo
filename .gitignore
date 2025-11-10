@@ -40,7 +40,7 @@ yarn-error.*
 /ios
 /android
 
-
 # Environment files
 .env
 .env.*
+env.d.ts
